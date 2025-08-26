@@ -44,7 +44,7 @@
 
   <!-- Версионирование для обхода кэша -->
   <script>
-    const VERSION = "4";
+    const VERSION = "5";
     if (!location.search.includes("v=" + VERSION)) {
       const sep = location.search ? "&" : "?";
       location.replace(location.pathname + sep + "v=" + VERSION + location.hash);
@@ -63,7 +63,7 @@
           { type: "Турник", height: 200, width: 100 },
           { type: "Кольца", height: 150 }
         ],
-        info: "Земля",
+        info: "Покрытие: Земля",
         photos: [
           "test.png"
         ]
