@@ -26,8 +26,10 @@
 </head>
 <body>
 <div id="map"></div>
+
 <div class="legend">
-  <h1>Обновлено: 27.08.25 14:36</h1>
+  <h1 id="legend-count"></h1>
+  <h1 id="legend-date">Обновлено: 27.08.25 14:40</h1>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -217,6 +219,13 @@
         L.circleMarker(ll, { radius: 6 }).addTo(map).bindPopup('Вы здесь');
       }
     });
+  }
+
+  // === Обновляем легенду количеством площадок ===
+  const dateEl = document.getElementById("legend-date");
+  const countEl = document.getElementById("legend-count");
+  if (countEl) {
+    countEl.textContent = `Площадок: ${POINTS.length}`;
   }
 </script>
 </body>
