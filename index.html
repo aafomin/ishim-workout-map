@@ -42,19 +42,15 @@
     <h1>Карта турников Ишима</h1>
   </div>
 
-  <!-- Версионирование для обхода кэша -->
-<!--   <script>
-    const VERSION = "5";
-    if (!location.search.includes("v=" + VERSION)) {
-      const sep = location.search ? "&" : "?";
-      location.replace(location.pathname + sep + "v=" + VERSION + location.hash);
-    }
-  </script> -->
-
+  <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Yandex Maps API 2.1 (без ключа) -->
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+  <!-- Плагин слоя Яндекса для Leaflet -->
+  <script src="https://cdn.jsdelivr.net/gh/shramov/leaflet-plugins/layer/tile/Yandex.js"></script>
+
   <script>
     // === ДАННЫЕ ===
-    // Для фото положи файлы в /images и укажи пути в photos.
     const POINTS = [
       {
         name: "Площадка во дворе",
@@ -64,9 +60,7 @@
           { type: "Кольца", height: 150 }
         ],
         info: "Покрытие: Земля",
-        photos: [
-          "test.png"
-        ]
+        photos: ["test.png"]
       },
       {
         name: "СК Локомотив. С обратной стороны",
@@ -75,26 +69,32 @@
           { type: "Турник" },
           { type: "Турник" }
         ],
-        photos: [
-          "test.png"
-        ]
+        photos: ["test.png"]
       },
       {
         name: "Бульвар Белоусова",
         coords: [56.133145, 69.535276],
-        equipment: [
-          { type: "Турник" }
-        ]
-        // без фото — тоже ок
+        equipment: [{ type: "Турник" }]
       }
     ];
 
     // === КАРТА ===
     const map = L.map('map');
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-    }).addTo(map);
+
+    const yandexScheme = L.yandex('yandex#map').addTo(map);     // схема по умолчанию
+    const yandexSatellite = L.yandex('yandex#satellite');
+    const yandexHybrid = L.yandex('yandex#hybrid');
+
+    // Переключатель слоёв
+    L.control.layers(
+      {
+        'Яндекс: Схема': yandexScheme,
+        'Яндекс: Спутник': yandexSatellite,
+        'Яндекс: Гибрид': yandexHybrid
+      },
+      {},
+      { collapsed: false }
+    ).addTo(map);
 
     if (POINTS.length) {
       map.fitBounds(POINTS.map(p => p.coords), { padding: [30, 30] });
@@ -171,7 +171,6 @@
           const src = t.getAttribute('src');
           if (!src) return;
           mainImg.setAttribute('src', src);
-          // подсветка активной миниатюры
           thumbs.forEach(x => x.classList.remove('active'));
           t.classList.add('active');
         });
