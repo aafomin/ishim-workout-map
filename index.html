@@ -82,8 +82,14 @@
     {
       name: "СК Локомотив. С обратной стороны",
       coords: [56.105871, 69.501988],
-      equipment: [{ type: "Турник" }],
-      photos: ["images/soon.png"]
+      equipment: [
+        { type: "Турник", height: 220 },
+        { type: "Турник", height: 200 },
+        { type: "Турник", height: 185 },
+        { type: "Брусья", height: 130,width: 75 }
+      ],
+      info: "Покрытие: Резина",
+      photos: ["images/wo_loko.jpg"]
     },
     {
       name: "Бульвар Белоусова",
@@ -174,7 +180,7 @@
         ? `<div style="margin:8px 0;padding:6px 10px;background:#ffebee;
                      border:1px solid #c62828;border-radius:8px;
                      color:#b71c1c;font-weight:600;">
-             ⚠ Площадка на частной территории - доступ может быть ограничен
+             ⚠ Доступ к площадке может быть ограничен
            </div>`
         : "";
 
