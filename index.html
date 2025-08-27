@@ -27,7 +27,7 @@
 <body>
 <div id="map"></div>
 <div class="legend">
-  <h1>Обновлено: 27.08.25 07:48</h1>
+  <h1>Обновлено: 27.08.25 14:28</h1>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -40,8 +40,8 @@
       name: "Площадка во дворе",
       coords: [56.103740, 69.458343],
       equipment: [
-        { type: "Турник" },
-        { type: "Кольца" }
+        { type: "Турник", height: 175 },
+        { type: "Кольца", height: 150, width: 45 }
       ],
       info: "Покрытие: Земля",
       photos: ["images/wo_msk25.jpg"]
@@ -50,7 +50,7 @@
       name: "Площадка во дворе",
       coords: [56.105535, 69.460074],
       equipment: [
-        { type: "Турник" }
+        { type: "Турник", height: 200}
       ],
       info: "Покрытие: Земля",
       photos: ["images/wo_lun46.jpg"]
@@ -60,7 +60,7 @@
       coords: [56.102327, 69.463071],
       equipment: [
         { type: "Турник" },
-        { type: "Брусья" }
+        { type: "Брусья", height: 120, width: 55 }
       ],
       info: "Покрытие: Резина",
       photos: ["images/wo_kaz.jpg"]
@@ -145,8 +145,8 @@
       if (p.equipment && p.equipment.length) {
         equipmentList = p.equipment.map(eq => {
           const params = [];
-          if (eq.height) params.push(`высота: ${eq.height}`);
-          if (eq.width)  params.push(`ширина: ${eq.width}`);
+          if (eq.height) params.push(`↕:${eq.height}`);
+          if (eq.width)  params.push(`↔:${eq.width}`);
           const paramText = params.length ? ` (${params.join(", ")})` : "";
           return `· ${eq.type}${paramText}`;
         }).join("<br>");
