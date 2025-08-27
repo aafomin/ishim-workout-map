@@ -27,7 +27,7 @@
 <body>
 <div id="map"></div>
 <div class="legend">
-  <h1>Обновлено: 27.08.25 14:28</h1>
+  <h1>Обновлено: 27.08.25 14:36</h1>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -63,7 +63,8 @@
         { type: "Брусья", height: 120, width: 55 }
       ],
       info: "Покрытие: Резина",
-      photos: ["images/wo_kaz.jpg"]
+      photos: ["images/wo_kaz.jpg"],
+      private: true
     },
     {
       name: "Во дворе Общежития",
@@ -166,9 +167,19 @@
         `;
       }
 
+      // если площадка частная — показываем предупреждение
+      const privateHtml = p.private
+        ? `<div style="margin:8px 0;padding:6px 10px;background:#ffebee;
+                     border:1px solid #c62828;border-radius:8px;
+                     color:#b71c1c;font-weight:600;">
+             ⚠ Площадка на частной территории - доступ может быть ограничен
+           </div>`
+        : "";
+
       m.bindPopup(`
         <div class="popup">
           <h3>${p.name}</h3>
+          ${privateHtml}
           ${galleryHtml}
           <div class="meta" style="margin-top:${galleryHtml ? "8px" : "0"}">
             ${equipmentList}<br><br>${p.info ? `<i>${p.info}</i>` : ""}
