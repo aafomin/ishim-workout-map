@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Карта турников Ишима</title>
   <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""
   />
   <style>
     html, body { height: 100%; margin: 0; }
@@ -16,174 +16,166 @@
     .legend { position: absolute; z-index: 1000; top: 10px; left: 10px; background: #fff; padding: 10px 12px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.1); font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
     .legend h1 { font-size: 16px; margin: 0 0 6px; }
     .popup h3 { margin: 0 8px 6px 0; font-size: 16px; display: inline-block; }
-    /* Галерея в попапе */
     .gallery { margin-top: 6px; }
-    .gallery .main {
-      width: 100%;
-      max-width: 260px;
-      border-radius: 10px;
-      display: block;
-    }
-    .thumbs {
-      display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;
-      max-width: 260px;
-    }
-    .thumbs img {
-      width: 56px; height: 56px; object-fit: cover;
-      border-radius: 8px; cursor: pointer; border: 2px solid transparent;
-    }
+    .gallery .main { width: 100%; max-width: 260px; border-radius: 10px; display: block; }
+    .thumbs { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; max-width: 260px; }
+    .thumbs img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
     .thumbs img.active { border-color: #EF5350; }
     .meta { margin-top: 6px; color: #555; font-size: 13px; }
   </style>
 </head>
 <body>
-  <div id="map"></div>
-  <div class="legend">
-    <h1>Обновлено: 27.08.25 07:48</h1>
-  </div>
+<div id="map"></div>
+<div class="legend">
+  <h1>Обновлено: 27.08.25 07:48</h1>
+</div>
 
-  <!-- Leaflet -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <!-- Yandex Maps API 2.1 (без ключа) -->
-  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
-  <!-- Плагин слоя Яндекса для Leaflet -->
-  <script src="https://cdn.jsdelivr.net/gh/shramov/leaflet-plugins/layer/tile/Yandex.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+<script src="https://cdn.jsdelivr.net/gh/shramov/leaflet-plugins/layer/tile/Yandex.js"></script>
 
-  <script>
-    const POINTS = [
-      {
-        name: "Площадка во дворе",
-        coords: [56.103740, 69.458343],
-        equipment: [
-          { type: "Турник", height: 200, width: 100 },
-          { type: "Кольца", height: 150 }
-        ],
-        info: "Покрытие: Земля",
-        photos: ["images/soon.png"]
-      },
-      {
-        name: "СК Локомотив. С обратной стороны",
-        coords: [56.105871, 69.501988],
-        equipment: [
-          { type: "Турник" },
-          { type: "Турник" }
-        ],
-        photos: ["images/soon.png"]
-      },
-      {
-        name: "Бульвар Белоусова",
-        coords: [56.133145, 69.535276],
-        equipment: [{ type: "Турник" }],
-        photos: ["images/soon.png"]
-      }
-    ];
-
-    // === КАРТА ===
-    const map = L.map('map');
-
-    const yandexScheme = L.yandex('yandex#map').addTo(map);     // схема по умолчанию
-    const yandexSatellite = L.yandex('yandex#satellite');
-    const yandexHybrid = L.yandex('yandex#hybrid');
-
-    // Переключатель слоёв
-    L.control.layers(
-      {
-        'Яндекс: Схема': yandexScheme,
-        'Яндекс: Спутник': yandexSatellite,
-        'Яндекс: Гибрид': yandexHybrid
-      },
-      {},
-      { collapsed: false }
-    ).addTo(map);
-
-    if (POINTS.length) {
-      map.fitBounds(POINTS.map(p => p.coords), { padding: [30, 30] });
-    } else {
-      map.setView([56.109175, 69.457073], 12);
+<script>
+  const POINTS = [
+    {
+      name: "Площадка во дворе",
+      coords: [56.103740, 69.458343],
+      equipment: [
+        { type: "Турник", height: 200, width: 100 },
+        { type: "Кольца", height: 150 }
+      ],
+      info: "Покрытие: Земля",
+      photos: ["images/soon.png"]
+    },
+    {
+      name: "СК Локомотив. С обратной стороны",
+      coords: [56.105871, 69.501988],
+      equipment: [{ type: "Турник" }, { type: "Турник" }],
+      photos: ["images/soon.png"]
+    },
+    {
+      name: "Бульвар Белоусова",
+      coords: [56.133145, 69.535276],
+      equipment: [{ type: "Турник" }],
+      photos: ["images/soon.png"]
     }
+  ];
 
-    // === МАРКЕРЫ + ПОПАПЫ ===
-    const markersLayer = L.layerGroup().addTo(map);
+  // === Задаём границы города Ишим ===
+  const CITY_BOUNDS = L.latLngBounds(
+    [56.00, 69.35], // юго-запад
+    [56.20, 69.60]  // северо-восток
+  );
 
-    function renderMarkers() {
-      markersLayer.clearLayers();
-      POINTS.forEach((p, idx) => {
-        const m = L.circleMarker(p.coords, {
-          radius: 8,
-          color: "#333",
-          weight: 2,
-          fillColor: "#EF5350",
-          fillOpacity: 0.9
-        });
+  // === КАРТА ===
+  const map = L.map('map', {
+    maxBounds: CITY_BOUNDS,
+    maxBoundsViscosity: 1.0, // «липкость» у границ
+    minZoom: 13
+  });
 
-        // Компактный список снарядов
-        let equipmentList = "—";
-        if (p.equipment && p.equipment.length) {
-          equipmentList = p.equipment.map(eq => {
-            const params = [];
-            if (eq.height) params.push(`высота: ${eq.height}`);
-            if (eq.width)  params.push(`ширина: ${eq.width}`);
-            const paramText = params.length ? ` (${params.join(", ")})` : "";
-            return `· ${eq.type}${paramText}`;
-          }).join("<br>");
-        }
+  const yandexScheme = L.yandex('yandex#map').addTo(map);
+  const yandexSatellite = L.yandex('yandex#satellite');
+  const yandexHybrid = L.yandex('yandex#hybrid');
 
-        // Галерея: главное фото + миниатюры (если есть)
-        let galleryHtml = "";
-        if (p.photos && p.photos.length) {
-          const main = p.photos[0];
-          const thumbs = p.photos.map((src, i) =>
-            `<img loading="lazy" src="${src}" data-thumb data-index="${i}" alt="Фото ${i+1}" class="${i===0?"active":""}">`
-          ).join("");
-          galleryHtml = `
-            <div class="gallery" data-gallery="${idx}">
-              <img loading="lazy" src="${main}" alt="Фото площадки" class="main" data-main>
-              ${p.photos.length > 1 ? `<div class="thumbs">${thumbs}</div>` : ""}
-            </div>
-          `;
-        }
+  L.control.layers(
+    {
+      'Яндекс: Схема': yandexScheme,
+      'Яндекс: Спутник': yandexSatellite,
+      'Яндекс: Гибрид': yandexHybrid
+    },
+    {},
+    { collapsed: false }
+  ).addTo(map);
 
-        m.bindPopup(`
-          <div class="popup">
-            <h3>${p.name}</h3>
-            ${galleryHtml}
-            <div class="meta" style="margin-top:${galleryHtml ? "8px" : "0"}">
-              ${equipmentList}<br><br>${p.info ? `<i>${p.info}</i>` : ""}
-            </div>
-          </div>
-        `);
+  if (POINTS.length) {
+    const ptsBounds = L.latLngBounds(POINTS.map(p => p.coords));
+    const target = CITY_BOUNDS.contains(ptsBounds) ? ptsBounds : CITY_BOUNDS;
+    map.fitBounds(target, { padding: [30, 30] });
+  } else {
+    map.setView([56.109175, 69.457073], 12);
+  }
 
-        m.addTo(markersLayer);
+  const markersLayer = L.layerGroup().addTo(map);
+
+  function renderMarkers() {
+    markersLayer.clearLayers();
+    POINTS.forEach((p, idx) => {
+      if (!CITY_BOUNDS.contains(p.coords)) return; // игнорируем точки вне Ишима
+
+      const m = L.circleMarker(p.coords, {
+        radius: 8,
+        color: "#333",
+        weight: 2,
+        fillColor: "#EF5350",
+        fillOpacity: 0.9
       });
-    }
-    renderMarkers();
 
-    // Делегирование кликов по миниатюрам внутри попапа — меняем главное фото
-    map.on('popupopen', (e) => {
-      const root = e.popup.getElement();
-      if (!root) return;
-      const mainImg = root.querySelector('[data-main]');
-      const thumbs = root.querySelectorAll('[data-thumb]');
-      if (!mainImg || !thumbs.length) return;
+      let equipmentList = "—";
+      if (p.equipment && p.equipment.length) {
+        equipmentList = p.equipment.map(eq => {
+          const params = [];
+          if (eq.height) params.push(`высота: ${eq.height}`);
+          if (eq.width)  params.push(`ширина: ${eq.width}`);
+          const paramText = params.length ? ` (${params.join(", ")})` : "";
+          return `· ${eq.type}${paramText}`;
+        }).join("<br>");
+      }
 
-      thumbs.forEach(t => {
-        t.addEventListener('click', () => {
-          const src = t.getAttribute('src');
-          if (!src) return;
-          mainImg.setAttribute('src', src);
-          thumbs.forEach(x => x.classList.remove('active'));
-          t.classList.add('active');
-        });
+      let galleryHtml = "";
+      if (p.photos && p.photos.length) {
+        const main = p.photos[0];
+        const thumbs = p.photos.map((src, i) =>
+          `<img loading="lazy" src="${src}" data-thumb data-index="${i}" alt="Фото ${i+1}" class="${i===0?"active":""}">`
+        ).join("");
+        galleryHtml = `
+          <div class="gallery" data-gallery="${idx}">
+            <img loading="lazy" src="${main}" alt="Фото площадки" class="main" data-main>
+            ${p.photos.length > 1 ? `<div class="thumbs">${thumbs}</div>` : ""}
+          </div>
+        `;
+      }
+
+      m.bindPopup(`
+        <div class="popup">
+          <h3>${p.name}</h3>
+          ${galleryHtml}
+          <div class="meta" style="margin-top:${galleryHtml ? "8px" : "0"}">
+            ${equipmentList}<br><br>${p.info ? `<i>${p.info}</i>` : ""}
+          </div>
+        </div>
+      `);
+
+      m.addTo(markersLayer);
+    });
+  }
+  renderMarkers();
+
+  map.on('popupopen', (e) => {
+    const root = e.popup.getElement();
+    if (!root) return;
+    const mainImg = root.querySelector('[data-main]');
+    const thumbs = root.querySelectorAll('[data-thumb]');
+    if (!mainImg || !thumbs.length) return;
+
+    thumbs.forEach(t => {
+      t.addEventListener('click', () => {
+        const src = t.getAttribute('src');
+        if (!src) return;
+        mainImg.setAttribute('src', src);
+        thumbs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
       });
     });
+  });
 
-    // Геолокация (опционально)
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const ll = [pos.coords.latitude, pos.coords.longitude];
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      const ll = [pos.coords.latitude, pos.coords.longitude];
+      if (CITY_BOUNDS.contains(ll)) {
         L.circleMarker(ll, { radius: 6 }).addTo(map).bindPopup('Вы здесь');
-      });
-    }
-  </script>
+      }
+    });
+  }
+</script>
 </body>
 </html>
