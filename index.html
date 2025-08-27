@@ -13,8 +13,8 @@
   <style>
     html, body { height: 100%; margin: 0; }
     #map { height: 100%; }
-    .legend { position: absolute; z-index: 1000; top: 10px; left: 10px; background: #fff; padding: 10px 12px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.1); font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    .legend h1 { font-size: 16px; margin: 0 0 6px; }
+    .legend { position: absolute; z-index: 1000; top: 10px; left: 10px; background: #fff; padding: 6px 7px 2px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.1); font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .legend h1 { font-size: 12px; margin: 0 0 6px; }
     .popup h3 { margin: 0 8px 6px 0; font-size: 16px; display: inline-block; }
     .gallery { margin-top: 6px; }
     .gallery .main { width: 100%; max-width: 260px; border-radius: 10px; display: block; }
@@ -76,13 +76,13 @@
 
   const yandexScheme = L.yandex('yandex#map').addTo(map);
   const yandexSatellite = L.yandex('yandex#satellite');
-  const yandexHybrid = L.yandex('yandex#hybrid');
+<!--  const yandexHybrid = L.yandex('yandex#hybrid');-->
 
   L.control.layers(
     {
       'Яндекс: Схема': yandexScheme,
       'Яндекс: Спутник': yandexSatellite,
-      'Яндекс: Гибрид': yandexHybrid
+<!--      'Яндекс: Гибрид': yandexHybrid-->
     },
     {},
     { collapsed: false }
