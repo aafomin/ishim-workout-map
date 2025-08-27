@@ -13,7 +13,13 @@
   <style>
     html, body { height: 100%; margin: 0; }
     #map { height: 100%; }
-    .legend { position: absolute; z-index: 1000; top: 10px; left: 10px; background: #fff; padding: 6px 7px 2px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.1); font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .legend {
+      position: absolute; z-index: 1000; top: 10px; left: 10px;
+      background: #fff; padding: 6px 7px 6px; border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.1);
+      font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      max-width: min(92vw, 380px);
+    }
     .legend h1 { font-size: 12px; margin: 0 0 6px; }
     .popup h3 { margin: 0 8px 6px 0; font-size: 16px; display: inline-block; }
     .gallery { margin-top: 6px; }
@@ -22,6 +28,16 @@
     .thumbs img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
     .thumbs img.active { border-color: #EF5350; }
     .meta { margin-top: 6px; color: #555; font-size: 13px; }
+
+    /* Фильтры */
+    #filters { margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
+    #filters label {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #f6f6f6; padding: 4px 8px; border-radius: 8px;
+      border: 1px solid #e5e5e5; font-size: 12px; user-select: none;
+    }
+    #filters input[type="checkbox"] { transform: scale(1.05); }
+    #filters .hint { font-size: 11px; color: #666; margin-top: 2px; width: 100%; }
   </style>
 </head>
 <body>
@@ -29,7 +45,8 @@
 
 <div class="legend">
   <h1 id="legend-count"></h1>
-  <h1 id="legend-date">Обновлено: 27.08.25 20:54</h1>
+  <h1 id="legend-date">Обновлено: 27.08.25 21:00</h1>
+  <div id="filters"></div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -95,15 +112,13 @@
       name: "Бульвар Белоусова",
       coords: [56.133145, 69.535276],
       equipment: [{ type: "Турник" }],
+      surface: "Земля",
       photos: ["images/soon.png"]
     }
   ];
 
   // === Задаём границы города Ишим ===
-  const CITY_BOUNDS = L.latLngBounds(
-          [56.00, 69.35], // юго-запад
-          [56.20, 69.60]  // северо-восток
-  );
+  const CITY_BOUNDS = L.latLngBounds([56.00, 69.35], [56.20, 69.60]);
 
   // === КАРТА ===
   const map = L.map('map', {
@@ -127,6 +142,7 @@
           { collapsed: false }
   ).addTo(map);
 
+  // Центрирование
   if (POINTS.length) {
     const ptsBounds = L.latLngBounds(POINTS.map(p => p.coords));
     const target = CITY_BOUNDS.contains(ptsBounds) ? ptsBounds : CITY_BOUNDS;
@@ -135,12 +151,52 @@
     map.setView([56.109175, 69.457073], 12);
   }
 
+  // === Фильтры по типам ===
+  function collectEquipmentTypes(points) {
+    const set = new Set();
+    points.forEach(p => (p.equipment || []).forEach(eq => {
+      if (eq.type) set.add(eq.type.trim());
+    }));
+    return Array.from(set).sort((a,b)=>a.localeCompare(b, 'ru'));
+  }
+
+  function renderFilters(types) {
+    const box = document.getElementById('filters');
+    if (!box) return;
+    if (!types.length) {
+      box.innerHTML = '<div class="hint">Типы снарядов не найдены</div>';
+      return;
+    }
+    const html = types.map(t => {
+      const id = 'flt-' + t.replace(/\s+/g,'-');
+      return `<label><input type="checkbox" value="${t}" id="${id}">${t}</label>`;
+    }).join('');
+    box.innerHTML = html;
+
+    // Делегируем обработчик кликов
+    box.addEventListener('change', () => renderMarkers());
+  }
+
+  function getSelectedTypes() {
+    const inputs = document.querySelectorAll('#filters input[type="checkbox"]:checked');
+    return Array.from(inputs).map(i => i.value);
+  }
+
+  // === Маркеры + попапы ===
   const markersLayer = L.layerGroup().addTo(map);
 
   function renderMarkers() {
+    const selected = getSelectedTypes(); // если [], показываем все
     markersLayer.clearLayers();
+
     POINTS.forEach((p, idx) => {
       if (!CITY_BOUNDS.contains(p.coords)) return;
+
+      // Фильтрация: если выбран хотя бы один тип, у точки должен быть пересекающийся тип
+      if (selected.length) {
+        const typesHere = (p.equipment || []).map(eq => (eq.type || '').trim());
+        if (!typesHere.some(t => selected.includes(t))) return;
+      }
 
       const m = L.circleMarker(p.coords, {
         radius: 8,
@@ -150,7 +206,6 @@
         fillOpacity: 0.9
       });
 
-      // Список снарядов (в одну строку на элемент)
       let equipmentList = "—";
       if (p.equipment && p.equipment.length) {
         equipmentList = p.equipment.map(eq => {
@@ -162,7 +217,6 @@
         }).join("<br>");
       }
 
-      // Галерея
       let galleryHtml = "";
       if (p.photos && p.photos.length) {
         const main = p.photos[0];
@@ -170,43 +224,40 @@
                 `<img loading="lazy" src="${src}" data-thumb data-index="${i}" alt="Фото ${i+1}" class="${i===0?"active":""}">`
         ).join("");
         galleryHtml = `
-          <div class="gallery" data-gallery="${idx}">
-            <img loading="lazy" src="${main}" alt="Фото площадки" class="main" data-main>
-            ${p.photos.length > 1 ? `<div class="thumbs">${thumbs}</div>` : ""}
-          </div>
-        `;
+            <div class="gallery" data-gallery="${idx}">
+              <img loading="lazy" src="${main}" alt="Фото площадки" class="main" data-main>
+              ${p.photos.length > 1 ? `<div class="thumbs">${thumbs}</div>` : ""}
+            </div>
+          `;
       }
 
-      // Предупреждение о частной территории
       const privateHtml = p.private
               ? `<div style="margin:8px 0;padding:6px 10px;background:#ffebee;border:1px solid #c62828;border-radius:8px;color:#b71c1c;font-weight:600;">
-             ⚠ Доступ к площадке может быть ограничен
-           </div>`
+               Внимание: площадка на частной территории, доступ может быть ограничен
+             </div>`
               : "";
 
-      // Покрытие (новое поле surface)
       const surfaceHtml = p.surface
               ? `<div class="meta" style="margin-top:6px;"><b>Покрытие:</b> ${p.surface}</div>`
               : "";
 
       m.bindPopup(`
-        <div class="popup">
-          <h3>${p.name}</h3>
-          ${privateHtml}
-          ${galleryHtml}
-          <div class="meta" style="margin-top:${galleryHtml ? "8px" : "0"}">
-            ${equipmentList}
+          <div class="popup">
+            <h3>${p.name}</h3>
+            ${privateHtml}
+            ${galleryHtml}
+            <div class="meta" style="margin-top:${galleryHtml ? "8px" : "0"}">
+              ${equipmentList}
+            </div>
+            ${surfaceHtml}
           </div>
-          ${surfaceHtml}
-        </div>
-      `);
+        `);
 
       m.addTo(markersLayer);
     });
   }
-  renderMarkers();
 
-  // Галерея: клик по миниатюре
+  // Галерея: клик по миниатюрам
   map.on('popupopen', (e) => {
     const root = e.popup.getElement();
     if (!root) return;
@@ -240,6 +291,11 @@
   if (countEl) {
     countEl.textContent = `Площадок: ${POINTS.length}`;
   }
+
+  // Инициализация фильтров и первичная отрисовка
+  const TYPES = collectEquipmentTypes(POINTS);
+  renderFilters(TYPES);
+  renderMarkers();
 </script>
 </body>
 </html>
