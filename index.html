@@ -70,7 +70,8 @@
   const map = L.map('map', {
     maxBounds: CITY_BOUNDS,
     maxBoundsViscosity: 1.0, // «липкость» у границ
-    minZoom: 13
+    minZoom: 13,
+    attributionControl: false
   });
 
   const yandexScheme = L.yandex('yandex#map').addTo(map);
