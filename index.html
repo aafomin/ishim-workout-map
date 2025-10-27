@@ -45,7 +45,7 @@
 
 <div class="legend">
   <h1 id="legend-count"></h1>
-  <h1 id="legend-date">Обновлено: 18.10.25 16:50</h1>
+  <h1 id="legend-date">Обновлено: 27.10.25 12:10</h1>
   <div id="filters"></div>
 </div>
 
@@ -55,161 +55,170 @@
 
 <script>
   const POINTS = [
-    {
-      name: "Площадка во дворе",
-      coords: [56.103740, 69.458343],
-      equipment: [
-        { type: "Турник", height: 175 },
-        { type: "Кольца", height: 150, width: 45 }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_msk25.jpg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.105535, 69.460074],
-      equipment: [
-        { type: "Турник", height: 200}
-      ],
-      surface: "Земля",
-      photos: ["images/wo_lun46.jpg"]
-    },
-    {
-      name: "Казачья молодежь Сибири",
-      coords: [56.102327, 69.463071],
-      equipment: [
-        { type: "Турник" },
-        { type: "Брусья", height: 120, width: 55 }
-      ],
-      surface: "Резина",
-      photos: ["images/wo_kaz.jpg"],
-      private: true
-    },
-    {
-      name: "Во дворе Общежития",
-      coords: [56.100884, 69.463845],
-      equipment: [
-        { type: "Турник", height: 180 },
-        { type: "Турник", height: 200 },
-        { type: "Турник", height: 220 },
-        { type: "Брусья", width: 70 },
-        { type: "Кольца" }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_ped_obsh.jpg"]
-    },
+      {
+          name: "Площадка во дворе",
+          coords: [56.103740, 69.458343],
+          equipment: [
+              {type: "Турник", height: 175},
+              {type: "Кольца", height: 150, width: 45}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_msk25.jpg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.105535, 69.460074],
+          equipment: [
+              {type: "Турник", height: 200}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_lun46.jpg"]
+      },
+      {
+          name: "Казачья молодежь Сибири",
+          coords: [56.102327, 69.463071],
+          equipment: [
+              {type: "Турник"},
+              {type: "Брусья", height: 120, width: 55}
+          ],
+          surface: "Резина",
+          photos: ["images/wo_kaz.jpg"],
+          private: true
+      },
+      {
+          name: "Во дворе Общежития",
+          coords: [56.100884, 69.463845],
+          equipment: [
+              {type: "Турник", height: 180},
+              {type: "Турник", height: 200},
+              {type: "Турник", height: 220},
+              {type: "Брусья", width: 70},
+              {type: "Кольца"}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_ped_obsh.jpg"]
+      },
       {
           name: "Площадка во дворе",
           coords: [56.101825, 69.464554],
           equipment: [
-              { type: "Турник" },
-              { type: "Брусья" }
+              {type: "Турник"},
+              {type: "Брусья"}
           ],
           surface: "Земля",
           photos: ["images/wo_bereg21.jpg"]
       },
-    {
-      name: "Площадка во дворе",
-      coords: [56.109261, 69.496403],
-      equipment: [
-        { type: "Турник", height: 230 },
-        { type: "Турник", height: 200 },
-        { type: "Турник", height: 170 }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_shar7.jpg"]
-    },
-    {
-      name: "СК Локомотив. С обратной стороны",
-      coords: [56.105871, 69.501988],
-      equipment: [
-        { type: "Турник", height: 220 },
-        { type: "Турник", height: 200 },
-        { type: "Турник", height: 185 },
-        { type: "Брусья", height: 130, width: 75 }
-      ],
-      surface: "Резина",
-      photos: ["images/wo_loko.jpg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.109365, 69.476914],
-      equipment: [
-        { type: "Турник", height: 170 },
-        { type: "Турник", height: 210 }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_pleh1.jpeg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.109244, 69.476445],
-      equipment: [
-        { type: "Турник", height: 170 },
-        { type: "Турник", height: 210 }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_suvor32.jpeg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.107993, 69.472124],
-      equipment: [
-        { type: "Турник", height: 215 },
-        { type: "Брусья", width: 60 }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_gor2.jpeg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.108706, 69.498906],
-      equipment: [
-        { type: "Турник" },
-        { type: "Брусья", width: 60 }
-      ],
-      surface: "Резина",
-      photos: ["images/wo_shar16.jpeg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.107297, 69.498348],
-      equipment: [
-        { type: "Турник" },
-        { type: "Брусья", width: 75 }
-      ],
-      surface: "Земля",
-      photos: ["images/wo_shar14.jpeg"]
-    },
-    {
-      name: "Бульвар Белоусова",
-      coords: [56.133145, 69.535276],
-      equipment: [
-        { type: "Турник" },
-        { type: "Брусья" },
-      ],
-      surface: "Резина",
-      photos: ["images/wo_belous.jpg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.101934, 69.462042],
-      equipment: [
-        { type: "Турник" },
-        { type: "Брусья" },
-      ],
-      surface: "Земля",
-      photos: ["images/wo_len11.jpg"]
-    },
-    {
-      name: "Площадка во дворе",
-      coords: [56.104102, 69.423483],
-      equipment: [
-        { type: "Турник" },
-      ],
-      surface: "Земля",
-      photos: ["images/wo_prioz86.jpg"]
-    },
+      {
+          name: "Площадка во дворе",
+          coords: [56.109261, 69.496403],
+          equipment: [
+              {type: "Турник", height: 230},
+              {type: "Турник", height: 200},
+              {type: "Турник", height: 170}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_shar7.jpg"]
+      },
+      {
+          name: "СК Локомотив. С обратной стороны",
+          coords: [56.105871, 69.501988],
+          equipment: [
+              {type: "Турник", height: 220},
+              {type: "Турник", height: 200},
+              {type: "Турник", height: 185},
+              {type: "Брусья", height: 130, width: 75}
+          ],
+          surface: "Резина",
+          photos: ["images/wo_loko.jpg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.109365, 69.476914],
+          equipment: [
+              {type: "Турник", height: 170},
+              {type: "Турник", height: 210}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_pleh1.jpeg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.109244, 69.476445],
+          equipment: [
+              {type: "Турник", height: 170},
+              {type: "Турник", height: 210}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_suvor32.jpeg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.107993, 69.472124],
+          equipment: [
+              {type: "Турник", height: 215},
+              {type: "Брусья", width: 60}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_gor2.jpeg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.108706, 69.498906],
+          equipment: [
+              {type: "Турник"},
+              {type: "Брусья", width: 60}
+          ],
+          surface: "Резина",
+          photos: ["images/wo_shar16.jpeg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.107297, 69.498348],
+          equipment: [
+              {type: "Турник"},
+              {type: "Брусья", width: 75}
+          ],
+          surface: "Земля",
+          photos: ["images/wo_shar14.jpeg"]
+      },
+      {
+          name: "Бульвар Белоусова",
+          coords: [56.133145, 69.535276],
+          equipment: [
+              {type: "Турник"},
+              {type: "Брусья"},
+          ],
+          surface: "Резина",
+          photos: ["images/wo_belous.jpg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.101934, 69.462042],
+          equipment: [
+              {type: "Турник"},
+              {type: "Брусья"},
+          ],
+          surface: "Земля",
+          photos: ["images/wo_len11.jpg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.104102, 69.423483],
+          equipment: [
+              {type: "Турник"},
+          ],
+          surface: "Земля",
+          photos: ["images/wo_prioz86.jpg"]
+      },
+      {
+          name: "Площадка во дворе",
+          coords: [56.110568, 69.474068],
+          equipment: [
+              {type: "Турник"},
+          ],
+          surface: "Резина",
+          photos: ["images/wo_suvor35.jpeg"]
+      },
   ];
 
   // === Задаём границы города Ишим ===
